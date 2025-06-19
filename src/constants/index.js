@@ -115,7 +115,7 @@ const techStackImgs = [
 const techStackIcons = [
   {
     name: "React Developer",
-    modelPath: "/models/react_logo-transformed.glb",
+    modelPath: "/models/energy-brian.glb",
     scale: 1,
     rotation: [0, 0, 0],
   },
