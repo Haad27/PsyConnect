@@ -12,7 +12,7 @@ const ServiceCard = ({ index, title, icon, desc }) => {
   return (
     <motion.div
       variants={!isMobile ? fadeIn("right", "spring", index * 0.5, 0.75) : {}}
-      className="w-full sm:w-[45%] lg:w-[30%]"
+      className={`w-full sm:w-[45%] lg:w-[30%]${isMobile ? " px-6" : ""}`}
     >
       <GlowCard card={{ showStars: false }}>
         <Tilt

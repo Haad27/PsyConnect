@@ -5,21 +5,50 @@ const isMobile = typeof window !== "undefined" && window.innerWidth <= 768;
 const GlowCard = ({ card, children }) => {
   const cardRef = useRef(null);
 
-  // Simulate a moving "fake mouse" on mobile to animate the glow
   useEffect(() => {
     if (!isMobile) return;
     const card = cardRef.current;
     if (!card) return;
     let frame;
     let angle = 0;
-    const animate = () => {
-      angle = (angle + 2) % 360;
-      // Simulate the mouse moving around the border by updating the --start variable
-      card.style.setProperty('--start', angle + 60);
-      frame = requestAnimationFrame(animate);
+    let observer;
+
+    const startAnimation = () => {
+      if (frame) return;
+      const animate = () => {
+        angle = (angle + 2) % 360;
+        card.style.setProperty('--start', angle + 60);
+        frame = requestAnimationFrame(animate);
+      };
+      animate();
     };
-    animate();
-    return () => cancelAnimationFrame(frame);
+
+    const stopAnimation = () => {
+      if (frame) {
+        cancelAnimationFrame(frame);
+        frame = null;
+      }
+    };
+
+    observer = new window.IntersectionObserver(
+      (entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            startAnimation();
+          } else {
+            stopAnimation();
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+
+    observer.observe(card);
+
+    return () => {
+      stopAnimation();
+      if (observer && card) observer.unobserve(card);
+    };
   }, []);
 
   const handleMouseMove = (e) => {
