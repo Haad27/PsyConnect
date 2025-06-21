@@ -8,7 +8,7 @@ import Experience from "./sections/Experience"
 import TechStack from "./sections/TechStack"
 import Testimonials from "./sections/Testimonials"
 import Contact from "./components/Contact"
-
+import Footer from "./sections/Footer"
 const App = ()=> {
     return (
        <>
@@ -21,6 +21,7 @@ const App = ()=> {
        <TechStack/>
        <Testimonials/>
        <Contact/>
+       <Footer/>
        </>
     )
 }
